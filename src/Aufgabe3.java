@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 /**
  * Aufgabe 3: Schatzsuche nach Karte mit Rückweg (25 Punkte)
  *
@@ -17,7 +18,10 @@ class Aufgabe3
     private final GameObject figur = new GameObject(19, 4, 2, "woman");
 
     // Hier weitere Attribute, falls ihr welche benötigt
-
+    private int treasureX;
+    private int treasureY;
+    private final ArrayList < Integer > schritte = new ArrayList < >();
+    private boolean rückweg = false ;
     /**
      * Konstruktor einer Schatzsucher:in.
      * @param karte Die Karte enthält an einer Stelle ein 'X'. Dessen
@@ -26,6 +30,18 @@ class Aufgabe3
      */
     Aufgabe3(final String[] karte)
     {
+        treasureX = -1;
+        treasureY = -1;
+        // Durchsuche die Karte, um die Position des Schatzes zu finden.
+        for (int y = 0; y < karte.length; y++) {
+            for (int x = 0; x < karte[y].length(); x++) {
+                if (karte[y].charAt(x) == 'X') {
+                    treasureX = x;
+                    treasureY = y;
+                    break;
+                }
+            }
+        }
     }
 
     /**
@@ -49,7 +65,25 @@ class Aufgabe3
      */
     boolean bewege()
     {
-        return false;
+        if(treasureX > figur.getX()){
+            figur.setRotation(0);
+        } else if(treasureX < figur.getX()){
+            figur.setRotation(2);
+        } else if (treasureY > figur.getY()) {
+            figur.setRotation((1));
+        } else if (treasureY < figur.getY()) {
+            figur.setRotation(3);
+        }else{
+            rückweg = true;
+        }
+        if(!rückweg){
+            schritte.add(figur.getRotation());
+        } else if (schritte.size() > 0) {
+            figur.setRotation(((schritte.remove(schritte.size()-1) + 2)));
+        } else{
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -58,7 +92,7 @@ class Aufgabe3
      * wieder zum Startpunkt zurück und bleibt stehen, wenn er erreicht
      * wurde. Insbesondere sollte dann auch das Programm anhalten.
      */
-    static void main()
+    public static void main(String arg[])
     {
         final Aufgabe3 instanz = new Aufgabe3(new String[] {
             "                    ",
