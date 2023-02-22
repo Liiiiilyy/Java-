@@ -15,7 +15,9 @@ class Aufgabe2
 {
     /** Die Figur, die gesteuert wird. */
     private final GameObject figur = new GameObject(6, 17, 0, "claudius");
-
+    private int treasureX;
+    private int treasureY;
+    private boolean hasTreasure = false;
     // Hier weitere Attribute, falls ihr welche benötigt
 
     /**
@@ -26,6 +28,18 @@ class Aufgabe2
      */
     Aufgabe2(final String[] karte)
     {
+        treasureX = -1;
+        treasureY = -1;
+        // Durchsuche die Karte, um die Position des Schatzes zu finden.
+        for (int y = 0; y < karte.length; y++) {
+            for (int x = 0; x < karte[y].length(); x++) {
+                if (karte[y].charAt(x) == 'X') {
+                    treasureX = x;
+                    treasureY = y;
+                    break;
+                }
+            }
+        }
     }
 
     /**
@@ -45,7 +59,32 @@ class Aufgabe2
      */
     boolean bewege()
     {
-        return false;
+        if (hasTreasure) {
+            return false; // Wenn wir den Schatz bereits gefunden haben, stoppen wir.
+        }
+
+        int dx = treasureX - figur.getX();
+        int dy = treasureY - figur.getY();
+
+        if (dx == 0 && dy == 0) {
+            // Wenn wir den Schatz gefunden haben, stoppen wir.
+            hasTreasure = true;
+            return false;
+        }
+
+        // Bestimme die neue Drehung der Figur.
+        int newRotation = 0;
+        if (dx > 0) {
+            newRotation = 0;
+        } else if (dx < 0) {
+            newRotation = 2;
+        } else if (dy > 0) {
+            newRotation = 1;
+        } else if (dy < 0) {
+            newRotation = 3;
+        }
+        figur.setRotation(newRotation);
+        return true;
     }
 
     /**
@@ -54,7 +93,7 @@ class Aufgabe2
      * dem Kreuz).
      * Insbesondere sollte dann auch das Programm anhalten.
      */
-    static void main()
+    public static void main(String[] args)
     {
         final Aufgabe2 instanz = new Aufgabe2(new String[] {
             "                    ",
