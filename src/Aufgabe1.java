@@ -11,6 +11,22 @@
  * in die Bewertung ein. Quelltexte, die nicht kompilieren, werden nicht
  * gewertet.
  */
+
+/*
+题目描述：
+
+        有一个游戏场景，有一个角色和一个宝藏，角色的起始位置和朝向已经固定，而宝藏的位置是作为构造函数的参数传递进来的。要求在每次移动中，角色应该朝向宝藏的方向，直到到达宝藏位置为止。
+
+        需要实现的方法：
+
+        构造函数
+        构造函数应该接受两个参数：宝藏的横坐标和纵坐标。在构造函数中可以为类添加其他必要的属性。
+
+        bewege() 方法
+        该方法应该在每次调用时计算出角色朝向宝藏的方向，如果角色已经到达宝藏位置则返回 false，否则返回 true。在返回 true 的情况下，角色应该向前移动一步，朝向宝藏的方向前进。
+
+        main() 方法
+        在 main() 方法中创建一个 Aufgabe1 实例，并在循环中调用 bewege() 方法。在每次调用 bewege() 方法后，应该根据角色当前的朝向和位置来移动角色，并调用 Game.sleep() 方法来等待一定的时间。*/
 class Aufgabe1
 {
     /** Die Figur, die gesteuert wird. */
